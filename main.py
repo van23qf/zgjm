@@ -84,9 +84,9 @@ def run():
             class_vals.append(f"({class_['id']},{group['id']},'{class_['name']}')")
             detail_vals.append(f"({class_['id']},{group['id']},'{detail}')")
     print(f"爬取完成，准备生成sql")
-    group_sql = f"INSERT INTO `dream_group` (`gid`, `name`) VALUES {','.join(group_vals)};"
-    class_sql = f"INSERT INTO `dream_class` (`cid`, `gid`, `name`) VALUES {','.join(class_vals)};"
-    detail_sql = f"INSERT INTO `dream_detail` (`did`, `cid`, `gid`, `detail`) VALUES {','.join(detail_vals)};"
+    group_sql = f"INSERT INTO `group` (`gid`, `name`) VALUES {','.join(group_vals)};"
+    class_sql = f"INSERT INTO `class` (`cid`, `gid`, `name`) VALUES {','.join(class_vals)};"
+    detail_sql = f"INSERT INTO `detail` (`did`, `cid`, `gid`, `detail`) VALUES {','.join(detail_vals)};"
     with open('dream.sql', 'w') as f:
         f.write(group_sql)
         f.write(class_sql)
