@@ -72,7 +72,7 @@ def run():
     class_vals = []
     detail_vals = []
     for group in groups:
-        print(f"爬取分组{group['name']}的分类")
+        print(f"爬取分组[{group['name']}]的分类")
         group_vals.append(f"({group['id']},'{group['name']}')")
         classes = get_class(group['id'])
         print(f"共爬取{len(classes)}个分类")
@@ -86,7 +86,7 @@ def run():
     print(f"爬取完成，准备生成sql")
     group_sql = f"INSERT INTO `group` (`gid`, `name`) VALUES {','.join(group_vals)};\r\n"
     class_sql = f"INSERT INTO `class` (`cid`, `gid`, `name`) VALUES {','.join(class_vals)};\r\n"
-    detail_sql = f"INSERT INTO `detail` (`did`, `cid`, `gid`, `detail`) VALUES {','.join(detail_vals)};\r\n"
+    detail_sql = f"INSERT INTO `detail` (`cid`, `gid`, `detail`) VALUES {','.join(detail_vals)};\r\n"
     with open('dream.sql', 'w') as f:
         f.write(group_sql)
         f.write(class_sql)
