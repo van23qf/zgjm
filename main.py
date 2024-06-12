@@ -60,7 +60,9 @@ def get_detail(class_id):
     if res['code'] != 200:
         raise Exception('请求失败:'+res['msg'])
     if not res.get('data') or not res['data'].get('content'):
-        raise Exception('没有找到详情')
+        print(f'没有找到详情-{class_id}')
+        return None
+        #raise Exception('没有找到详情')
     return res['data']['content']
 
 def run():
@@ -76,8 +78,10 @@ def run():
         print(f"共爬取{len(classes)}个分类")
         print(f"开始爬取详情")
         for class_ in classes:
-            class_vals.append(f"({class_['id']},{group['id']},'{class_['name']}')")
             detail = get_detail(class_['id'])
+            if not detail:
+                continue
+            class_vals.append(f"({class_['id']},{group['id']},'{class_['name']}')")
             detail_vals.append(f"({class_['id']},{group['id']},'{detail}')")
     print(f"爬取完成，准备生成sql")
     group_sql = f"INSERT INTO `dream_group` (`gid`, `name`) VALUES {','.join(group_vals)};"
