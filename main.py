@@ -63,7 +63,7 @@ def get_detail(class_id):
         print(f'没有找到详情-{class_id}')
         return None
         #raise Exception('没有找到详情')
-    return res['data']['content']
+    return res['data']['content'].replace("'", "")
 
 def run():
     groups = get_group()
@@ -84,9 +84,9 @@ def run():
             class_vals.append(f"({class_['id']},{group['id']},'{class_['name']}')")
             detail_vals.append(f"({class_['id']},{group['id']},'{detail}')")
     print(f"爬取完成，准备生成sql")
-    group_sql = f"INSERT INTO `group` (`gid`, `name`) VALUES {','.join(group_vals)};"
-    class_sql = f"INSERT INTO `class` (`cid`, `gid`, `name`) VALUES {','.join(class_vals)};"
-    detail_sql = f"INSERT INTO `detail` (`did`, `cid`, `gid`, `detail`) VALUES {','.join(detail_vals)};"
+    group_sql = f"INSERT INTO `group` (`gid`, `name`) VALUES {','.join(group_vals)};\r\n"
+    class_sql = f"INSERT INTO `class` (`cid`, `gid`, `name`) VALUES {','.join(class_vals)};\r\n"
+    detail_sql = f"INSERT INTO `detail` (`did`, `cid`, `gid`, `detail`) VALUES {','.join(detail_vals)};\r\n"
     with open('dream.sql', 'w') as f:
         f.write(group_sql)
         f.write(class_sql)
